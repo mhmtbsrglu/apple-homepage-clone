@@ -185,6 +185,12 @@
     dot.type = 'button';
     dot.className = 'carousel-dot';
     dot.setAttribute('aria-label', `Show story ${index + 1}: ${story.querySelector('h3')?.textContent.trim() || 'Apple TV'}`);
+    const shape = document.createElement('div');
+    shape.className = 'carousel-dot-shape';
+    shape.setAttribute('aria-hidden', 'true');
+    shape.style.width = '7px';
+    shape.style.height = '7px';
+    dot.append(shape);
     dot.addEventListener('click', () => {
       goToStory(index);
       resetAutoplay();
@@ -224,6 +230,10 @@
     dots.forEach((dot, dotIndex) => {
       const isActive = dotIndex === index;
       dot.classList.toggle('is-active', isActive);
+      const shape = dot.querySelector('.carousel-dot-shape');
+      shape.style.width = isActive ? '18px' : '7px';
+      shape.style.height = '7px';
+      shape.style.borderRadius = isActive ? '999px' : '50%';
       if (isActive) dot.setAttribute('aria-current', 'true');
       else dot.removeAttribute('aria-current');
     });
