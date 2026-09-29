@@ -310,35 +310,4 @@
   if (storyCount > 1) storyTrack.scrollLeft = geometry().step;
   updateCarousel();
   syncAutoplay();
-
-  const revealSelector = '.hero-copy, .product-tile, .entertainment-heading, .story:not([data-carousel-clone]), .carousel-pagination, .service-promo, .footer-note, .footer-breadcrumb, .footer-columns > div, .footer-bottom';
-  const revealItems = [...document.querySelectorAll(revealSelector)];
-  const revealOrder = new Map();
-  revealItems.forEach((item) => {
-    const order = revealOrder.get(item.parentElement) || 0;
-    revealOrder.set(item.parentElement, order + 1);
-    item.classList.add('scroll-reveal');
-    item.style.setProperty('--reveal-delay', `${Math.min(order, 4) * 45}ms`);
-  });
-
-  if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle('is-visible', entry.isIntersecting);
-        entry.target.classList.toggle('is-exiting', !entry.isIntersecting);
-      });
-    }, { threshold: 0.02, rootMargin: '64px 0px 64px 0px' });
-
-    revealItems.forEach((item) => revealObserver.observe(item));
-    document.addEventListener('focusin', (event) => {
-      const item = event.target.closest('.scroll-reveal');
-      if (item) {
-        item.classList.add('is-visible');
-        item.classList.remove('is-exiting');
-      }
-    });
-    document.body.classList.add('has-scroll-reveals');
-  } else {
-    revealItems.forEach((item) => item.classList.add('is-visible'));
-  }
 })();
