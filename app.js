@@ -197,7 +197,7 @@
   window.addEventListener('resize', updateProgress);
   updateProgress();
 
-  const revealSelector = '.store-note, .hero-copy, .product-tile, .entertainment-heading, .story, .carousel-progress, .details > div, .footer-note, .footer-breadcrumb, .footer-columns > div, .footer-bottom';
+  const revealSelector = '.hero-copy, .product-tile, .entertainment-heading, .story, .carousel-progress, .service-promo, .footer-note, .footer-breadcrumb, .footer-columns > div, .footer-bottom';
   const revealItems = [...document.querySelectorAll(revealSelector)];
   const revealOrder = new Map();
   revealItems.forEach((item) => {

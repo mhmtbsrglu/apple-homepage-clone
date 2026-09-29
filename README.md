@@ -33,8 +33,10 @@ GitHub Pages can publish a private repository when the account's plan supports p
 - Responsive global navigation with search and shopping bag panels
 - Product campaign heroes and a six-tile product grid
 - Product images, estimated prices, quantity counts, and removable bag items
-- A keyboard-accessible Apple TV carousel with working previous/next controls
+- A nine-slide Apple TV poster carousel with working previous/next controls
+- A row of Apple TV, Fitness+, and Arcade service promotions
+- A complete multi-column Apple directory and legal footer
 - Reversible scroll reveals with reduced-motion support
-- Locally stored Apple product images in `assets/`
+- Locally stored product images in `assets/`
 
-Product photography in `assets/` is sourced from Apple's public homepage.
+Product photography in `assets/` is sourced from Apple's public homepage. The entertainment gallery artwork is served from Apple's public media CDN.
