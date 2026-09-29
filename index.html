@@ -40,7 +40,14 @@
         </div>
       </section>
       <section class="utility-panel bag-panel" id="bagPanel" hidden aria-label="Shopping bag">
-        <div class="panel-inner bag-inner"><strong id="bagSummary">Your bag is empty.</strong><ul class="bag-items" id="bagItems" aria-live="polite"></ul><a href="#store">Shop the latest products <span>→</span></a><p>Sign in to see if you have any saved items.</p></div>
+        <div class="panel-inner bag-inner">
+          <strong id="bagSummary">Your bag is empty.</strong>
+          <ul class="bag-items" id="bagItems" aria-live="polite"></ul>
+          <div class="bag-totals" id="bagTotals" hidden><span>Estimated subtotal</span><strong id="bagSubtotal">$0</strong></div>
+          <p id="bagNote">Sign in to see if you have any saved items.</p>
+          <a href="#store">Shop the latest products <span>→</span></a>
+          <p class="bag-disclaimer">Demo prices shown. Taxes are calculated at checkout.</p>
+        </div>
       </section>
     </header>
 
@@ -51,7 +58,7 @@
           <p class="eyebrow">A new perspective</p>
           <h1 id="iphoneTitle">iPhone 18 Pro</h1>
           <p class="hero-subtitle">Pro further.</p>
-          <div class="button-row"><a class="pill-button" href="#iphone-details">Learn more <span>↗</span></a><button class="pill-button pill-outline" type="button" data-add="iPhone 18 Pro">Buy <span>↗</span></button></div>
+          <div class="button-row"><a class="pill-button" href="#iphone-details">Learn more <span>↗</span></a><button class="pill-button pill-outline" type="button" data-add="iPhone 18 Pro" data-price="1099" data-image="assets/iphone-pro.jpg">Buy <span>↗</span></button></div>
         </div>
         <img class="hero-image" src="assets/iphone-pro.jpg" alt="iPhone 18 Pro in deep burgundy, shown from the back" fetchpriority="high" />
         <a class="hero-hit-area" href="#iphone-details" aria-label="Learn more about iPhone 18 Pro"></a>
@@ -63,7 +70,7 @@
           <h2 id="duoTitle">iPhone Duo</h2>
           <p class="hero-subtitle">Hello, hello.</p>
           <p class="availability">Pre-order starts 10.16 · Available 10.23</p>
-          <div class="button-row"><a class="pill-button" href="#iphone-details">Learn more <span>↗</span></a><button class="pill-button pill-outline" type="button" data-add="iPhone Duo">View pricing <span>↗</span></button></div>
+          <div class="button-row"><a class="pill-button" href="#iphone-details">Learn more <span>↗</span></a><button class="pill-button pill-outline" type="button" data-add="iPhone Duo" data-price="1799" data-image="assets/iphone-duo.jpg">Buy <span>↗</span></button></div>
         </div>
         <img class="hero-image" src="assets/iphone-duo.jpg" alt="iPhone Duo opened to show its expansive interior display" loading="lazy" />
         <a class="hero-hit-area" href="#iphone-details" aria-label="Learn more about iPhone Duo"></a>
@@ -74,7 +81,7 @@
           <p class="eyebrow">Apple Watch Series 12</p>
           <h2 id="watchTitle">A healthier you.<br />In every way.</h2>
           <p class="hero-subtitle">The most accurate heart rate sensing in a wearable.</p>
-          <div class="button-row"><a class="pill-button" href="#watch-details">Learn more <span>↗</span></a><button class="pill-button pill-outline" type="button" data-add="Apple Watch Series 12">Buy <span>↗</span></button></div>
+          <div class="button-row"><a class="pill-button" href="#watch-details">Learn more <span>↗</span></a><button class="pill-button pill-outline" type="button" data-add="Apple Watch Series 12" data-price="399" data-image="assets/watch-series.jpg">Buy <span>↗</span></button></div>
         </div>
         <img class="hero-image" src="assets/watch-series.jpg" alt="Apple Watch Series 12 in dark bronze with an olive sport band" loading="lazy" />
         <a class="hero-hit-area" href="#watch-details" aria-label="Learn more about Apple Watch Series 12"></a>
@@ -82,19 +89,19 @@
 
       <section class="product-grid" aria-label="More to explore">
         <article class="product-tile tile-mac" id="mac">
-          <div class="tile-copy"><p class="tile-kicker">Small wonder.</p><h2>Mac mini</h2><p>Now with M6 and M5 Pro.</p><div class="button-row"><a href="#mac-details" class="text-link">Learn more <span>›</span></a><button class="text-link" type="button" data-add="Mac mini">Buy <span>›</span></button></div></div>
+          <div class="tile-copy"><p class="tile-kicker">Small wonder.</p><h2>Mac mini</h2><p>Now with M6 and M5 Pro.</p><div class="button-row"><a href="#mac-details" class="text-link">Learn more <span>›</span></a><button class="text-link" type="button" data-add="Mac mini" data-price="599" data-image="assets/mac-mini.jpg">Buy <span>›</span></button></div></div>
           <img src="assets/mac-mini.jpg" alt="Mac mini, compact desktop computer" loading="lazy" />
         </article>
         <article class="product-tile tile-air" id="macbook">
-          <div class="tile-copy"><p class="tile-kicker">Light. Speed. All in.</p><h2>MacBook Air</h2><p>Now supercharged by M5.</p><div class="button-row"><a href="#mac-details" class="text-link">Learn more <span>›</span></a><button class="text-link" type="button" data-add="MacBook Air">Buy <span>›</span></button></div></div>
+          <div class="tile-copy"><p class="tile-kicker">Light. Speed. All in.</p><h2>MacBook Air</h2><p>Now supercharged by M5.</p><div class="button-row"><a href="#mac-details" class="text-link">Learn more <span>›</span></a><button class="text-link" type="button" data-add="MacBook Air" data-price="999" data-image="assets/macbook-air.jpg">Buy <span>›</span></button></div></div>
           <img src="assets/macbook-air.jpg" alt="Two sky-blue MacBook Air laptops crossing to emphasize their thin design" loading="lazy" />
         </article>
         <article class="product-tile tile-ipad" id="ipad">
-          <div class="tile-copy"><p class="tile-kicker">A little more color.</p><h2>iPad Air</h2><p>Now supercharged by M4.</p><div class="button-row"><a href="#ipad-details" class="text-link">Learn more <span>›</span></a><button class="text-link" type="button" data-add="iPad Air">Buy <span>›</span></button></div></div>
+          <div class="tile-copy"><p class="tile-kicker">A little more color.</p><h2>iPad Air</h2><p>Now supercharged by M4.</p><div class="button-row"><a href="#ipad-details" class="text-link">Learn more <span>›</span></a><button class="text-link" type="button" data-add="iPad Air" data-price="599" data-image="assets/ipad-air.jpg">Buy <span>›</span></button></div></div>
           <img src="assets/ipad-air.jpg" alt="iPad Air models shown from the front and back" loading="lazy" />
         </article>
         <article class="product-tile tile-ultra">
-          <div class="tile-copy"><p class="tile-kicker">The adventure continues.</p><h2>Apple Watch Ultra 4</h2><p>A battery you can’t outrun.</p><div class="button-row"><a href="#watch-details" class="text-link">Learn more <span>›</span></a><button class="text-link" type="button" data-add="Apple Watch Ultra 4">Buy <span>›</span></button></div></div>
+          <div class="tile-copy"><p class="tile-kicker">The adventure continues.</p><h2>Apple Watch Ultra 4</h2><p>A battery you can’t outrun.</p><div class="button-row"><a href="#watch-details" class="text-link">Learn more <span>›</span></a><button class="text-link" type="button" data-add="Apple Watch Ultra 4" data-price="799" data-image="assets/watch-ultra.jpg">Buy <span>›</span></button></div></div>
           <img src="assets/watch-ultra.jpg" alt="Apple Watch Ultra 4 with a natural titanium case and Ocean Band" loading="lazy" />
         </article>
         <article class="product-tile tile-upgrade">
@@ -107,13 +114,13 @@
         </article>
       </section>
 
-      <section class="entertainment" id="entertainment" aria-labelledby="entertainmentTitle">
-        <div class="entertainment-heading"><div><p class="eyebrow">A world of stories</p><h2 id="entertainmentTitle">Endless entertainment.</h2></div><div class="carousel-controls"><button type="button" class="carousel-button" data-scroll="-1" aria-label="Previous stories">←</button><button type="button" class="carousel-button" data-scroll="1" aria-label="Next stories">→</button></div></div>
-        <div class="story-track" id="storyTrack" tabindex="0" aria-label="Entertainment stories">
-          <article class="story story-drama"><span class="story-brand">tv</span><div><p class="story-tag">NEW SEASON</p><h3>Big feelings.<br />Bigger family.</h3><a href="#footer">Stream now <span>›</span></a></div></article>
-          <article class="story story-racing"><span class="story-brand">tv</span><div><p class="story-tag">LIVE SPORTS</p><h3>Every Grand Prix.<br />All in one place.</h3><a href="#footer">Watch now <span>›</span></a></div></article>
-          <article class="story story-comedy"><span class="story-brand">tv</span><div><p class="story-tag">NEW EPISODES</p><h3>Good friends.<br />Questionable plans.</h3><a href="#footer">Stream now <span>›</span></a></div></article>
-          <article class="story story-scifi"><span class="story-brand">tv</span><div><p class="story-tag">APPLE ORIGINAL FILM</p><h3>There’s no world<br />like home.</h3><a href="#footer">Watch now <span>›</span></a></div></article>
+      <section class="entertainment" id="entertainment" aria-labelledby="entertainmentTitle" aria-roledescription="carousel">
+        <div class="entertainment-heading"><div><p class="eyebrow">A world of stories</p><h2 id="entertainmentTitle">Endless entertainment.</h2></div><div class="carousel-controls"><button type="button" class="carousel-button" data-scroll="-1" aria-label="Previous stories" aria-controls="storyTrack" disabled>←</button><button type="button" class="carousel-button" data-scroll="1" aria-label="Next stories" aria-controls="storyTrack">→</button></div></div>
+        <div class="story-track" id="storyTrack" tabindex="0" role="region" aria-label="Apple TV stories">
+          <article class="story story-drama"><a class="story-brand" href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer" aria-label="Explore Apple TV+">tv</a><div><p class="story-tag">NEW SEASON</p><h3>Big feelings.<br />Bigger family.</h3><a href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer">Stream now <span>›</span></a></div></article>
+          <article class="story story-racing"><a class="story-brand" href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer" aria-label="Explore Apple TV+">tv</a><div><p class="story-tag">LIVE SPORTS</p><h3>Every Grand Prix.<br />All in one place.</h3><a href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer">Watch now <span>›</span></a></div></article>
+          <article class="story story-comedy"><a class="story-brand" href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer" aria-label="Explore Apple TV+">tv</a><div><p class="story-tag">NEW EPISODES</p><h3>Good friends.<br />Questionable plans.</h3><a href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer">Stream now <span>›</span></a></div></article>
+          <article class="story story-scifi"><a class="story-brand" href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer" aria-label="Explore Apple TV+">tv</a><div><p class="story-tag">APPLE ORIGINAL FILM</p><h3>There’s no world<br />like home.</h3><a href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer">Watch now <span>›</span></a></div></article>
         </div>
         <div class="carousel-progress" aria-hidden="true"><span id="carouselProgress"></span></div>
       </section>

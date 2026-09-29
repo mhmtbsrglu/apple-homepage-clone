@@ -32,8 +32,9 @@ GitHub Pages can publish a private repository when the account's plan supports p
 
 - Responsive global navigation with search and shopping bag panels
 - Product campaign heroes and a six-tile product grid
-- Add-to-bag feedback and an interactive entertainment carousel
-- Reduced-motion support and keyboard-accessible controls
+- Product images, estimated prices, quantity counts, and removable bag items
+- A keyboard-accessible Apple TV carousel with working previous/next controls
+- Reversible scroll reveals with reduced-motion support
 - Locally stored Apple product images in `assets/`
 
 Product photography in `assets/` is sourced from Apple's public homepage.
