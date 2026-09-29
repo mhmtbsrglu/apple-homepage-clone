@@ -195,6 +195,11 @@
   });
   storyTrack.addEventListener('scroll', updateProgress, { passive: true });
   window.addEventListener('resize', updateProgress);
+  const firstStory = storyTrack.querySelector('.story');
+  if (firstStory && storyTrack.scrollWidth > storyTrack.clientWidth) {
+    const gap = Number.parseFloat(getComputedStyle(storyTrack).columnGap) || 0;
+    storyTrack.scrollLeft = firstStory.getBoundingClientRect().width + gap;
+  }
   updateProgress();
 
   const revealSelector = '.hero-copy, .product-tile, .entertainment-heading, .story, .carousel-progress, .service-promo, .footer-note, .footer-breadcrumb, .footer-columns > div, .footer-bottom';
