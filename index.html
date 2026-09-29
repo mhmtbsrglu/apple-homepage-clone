@@ -8,7 +8,7 @@
     <title>Apple</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=entertainment-fullbleed" />
+    <link rel="stylesheet" href="styles.css?v=entertainment-infinite" />
   </head>
   <body>
     <header class="site-header">
@@ -111,7 +111,7 @@
       </section>
 
       <section class="entertainment" id="entertainment" aria-labelledby="entertainmentTitle" aria-roledescription="carousel">
-        <div class="entertainment-heading"><div><h2 id="entertainmentTitle">Endless entertainment.</h2></div><div class="carousel-controls"><button type="button" class="carousel-button" data-scroll="-1" aria-label="Previous stories" aria-controls="storyTrack" disabled>←</button><button type="button" class="carousel-button" data-scroll="1" aria-label="Next stories" aria-controls="storyTrack">→</button></div></div>
+        <div class="entertainment-heading"><div><h2 id="entertainmentTitle">Endless entertainment.</h2></div><div class="carousel-controls"><button type="button" class="carousel-button" data-scroll="-1" aria-label="Previous stories" aria-controls="storyTrack">←</button><button type="button" class="carousel-button" data-scroll="1" aria-label="Next stories" aria-controls="storyTrack">→</button></div></div>
         <div class="story-track" id="storyTrack" tabindex="0" role="region" aria-label="Apple TV stories">
           <article class="story"><img src="https://is1-ssl.mzstatic.com/image/thumb/oglUrIV-GAOPYCYKh5AlBQ/1250x668sr.jpg" alt="Brothers — Apple TV comedy series" loading="lazy" /><div><p class="story-tag">COMEDY</p><h3>Friends. And family?</h3><a href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer">Stream now <span>›</span></a></div></article>
           <article class="story"><img src="https://is1-ssl.mzstatic.com/image/thumb/x5JjmiSD75wN12-HmmZRcg/1250x668sr.jpg" alt="Apple TV thriller series artwork" loading="lazy" /><div><p class="story-tag">THRILLER</p><h3>New season.</h3><a href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer">Stream now <span>›</span></a></div></article>
@@ -123,11 +123,14 @@
           <article class="story"><img src="https://is1-ssl.mzstatic.com/image/thumb/CqMFl0CvUAUE1axxV4k-ew/1250x668sr.jpg" alt="Apple TV award-winning comedy artwork" loading="lazy" /><div><p class="story-tag">COMEDY</p><h3>14 Emmy® Awards.</h3><a href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer">Stream now <span>›</span></a></div></article>
           <article class="story"><img src="https://is1-ssl.mzstatic.com/image/thumb/b-b9eb0IET479YbfP-t1cA/1250x668sr.jpg" alt="Apple TV original science fiction film artwork" loading="lazy" /><div><p class="story-tag">SCI-FI</p><h3>There’s no world like home.</h3><a href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer">Stream now <span>›</span></a></div></article>
         </div>
-        <div class="carousel-progress" aria-hidden="true"><span id="carouselProgress"></span></div>
         <div class="services-gallery" aria-label="Explore Apple services">
           <a class="service-promo" href="https://fitness.apple.com/" target="_blank" rel="noopener noreferrer"><img src="https://is1-ssl.mzstatic.com/image/thumb/Video211/v4/04/bb/74/04bb74f8-3dc4-d68e-54a2-a95bb2aa529a/TR_EF_0124_artwork_en_ID359271_0.png/470x264.jpg" alt="Fitness+ treadmill workout" loading="lazy" /><span> Fitness+ · Treadmill with Emily</span></a>
           <a class="service-promo" href="https://tv.apple.com/" target="_blank" rel="noopener noreferrer"><img src="https://is1-ssl.mzstatic.com/image/thumb/Features/v4/79/8e/f0/798ef0c7-5cdb-4eb0-6e23-4b68d5525832/3036bfa7-3cc0-419b-9c57-47e7101906ad.png/470x264.jpg" alt="Join the Team with Ted Lasso" loading="lazy" /><span>tv · Join the Team with “Ted Lasso”</span></a>
           <a class="service-promo" href="https://www.apple.com/apple-arcade/" target="_blank" rel="noopener noreferrer"><img src="https://is1-ssl.mzstatic.com/image/thumb/Features211/v4/5b/b3/4a/5bb34a60-695c-a96f-75ec-8a957fc2a20b/45899847-e52c-44a1-9ce5-09aedebb7a78.png/470x264.jpg" alt="Hello Kitty Island Adventure on Apple Arcade" loading="lazy" /><span> Arcade · Hello Kitty Island Adventure</span></a>
+        </div>
+        <div class="carousel-pagination" aria-label="Apple TV story navigation">
+          <div class="carousel-dots" id="carouselDots" role="group" aria-label="Choose a story"></div>
+          <button class="autoplay-toggle" type="button" id="autoplayToggle" aria-label="Pause automatic playback" aria-pressed="false"><span aria-hidden="true">Ⅱ</span></button>
         </div>
       </section>
 
@@ -147,6 +150,6 @@
     </footer>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=entertainment-fullbleed" defer></script>
+    <script src="app.js?v=entertainment-infinite" defer></script>
   </body>
 </html>

@@ -13,8 +13,9 @@
   const bagSubtotal = document.querySelector('#bagSubtotal');
   const bagNote = document.querySelector('#bagNote');
   const storyTrack = document.querySelector('#storyTrack');
-  const progressFill = document.querySelector('#carouselProgress');
   const storyButtons = [...document.querySelectorAll('[data-scroll]')];
+  const dotsContainer = document.querySelector('#carouselDots');
+  const autoplayToggle = document.querySelector('#autoplayToggle');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const cart = new Map();
   const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -164,45 +165,153 @@
     renderBag();
   });
 
-  const updateProgress = () => {
-    const maxScroll = Math.max(0, storyTrack.scrollWidth - storyTrack.clientWidth);
-    const ratio = maxScroll > 0 ? storyTrack.scrollLeft / maxScroll : 0;
-    const fill = Math.min(1, storyTrack.clientWidth / storyTrack.scrollWidth);
-    const width = `${fill * 100}%`;
-    if (progressFill.style.width !== width) progressFill.style.width = width;
-    progressFill.style.transform = `translateX(${ratio * ((1 - fill) / fill) * 100}%)`;
-    storyButtons.forEach((button) => {
-      button.disabled = maxScroll < 1 || (Number(button.dataset.scroll) < 0 ? storyTrack.scrollLeft <= 1 : storyTrack.scrollLeft >= maxScroll - 1);
+  const stories = [...storyTrack.querySelectorAll('.story')];
+  const storyCount = stories.length;
+  const cloneStory = (story, side) => {
+    const clone = story.cloneNode(true);
+    clone.dataset.carouselClone = side;
+    clone.setAttribute('aria-hidden', 'true');
+    clone.querySelectorAll('a, button, input, [tabindex]').forEach((item) => item.setAttribute('tabindex', '-1'));
+    clone.querySelectorAll('img').forEach((image) => { image.loading = 'eager'; });
+    return clone;
+  };
+  if (storyCount > 1) {
+    storyTrack.prepend(cloneStory(stories[storyCount - 1], 'before'));
+    storyTrack.append(cloneStory(stories[0], 'after'));
+  }
+
+  const dots = stories.map((story, index) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'carousel-dot';
+    dot.setAttribute('aria-label', `Show story ${index + 1}: ${story.querySelector('h3')?.textContent.trim() || 'Apple TV'}`);
+    dot.addEventListener('click', () => {
+      goToStory(index);
+      resetAutoplay();
+    });
+    dotsContainer.append(dot);
+    return dot;
+  });
+
+  let activeStory = 0;
+  let autoplayTimer;
+  let settleTimer;
+  let interactionTimer;
+  let userPaused = reduceMotion.matches;
+  let inViewport = true;
+  let hovered = false;
+  let focused = false;
+  let interacting = false;
+
+  const geometry = () => {
+    const card = storyTrack.querySelector('.story');
+    const gap = Number.parseFloat(getComputedStyle(storyTrack).columnGap) || 0;
+    return { step: card.getBoundingClientRect().width + gap };
+  };
+  const goToStory = (index, behavior = reduceMotion.matches ? 'auto' : 'smooth') => {
+    const { step } = geometry();
+    const wrappedIndex = (index + storyCount) % storyCount;
+    activeStory = wrappedIndex;
+    storyTrack.scrollTo({ left: (wrappedIndex + 1) * step, behavior });
+    updateCarousel();
+  };
+  const updateCarousel = () => {
+    if (!storyCount) return;
+    const { step } = geometry();
+    const slide = Math.round(storyTrack.scrollLeft / step);
+    const index = ((slide - 1) % storyCount + storyCount) % storyCount;
+    activeStory = index;
+    dots.forEach((dot, dotIndex) => {
+      const isActive = dotIndex === index;
+      dot.classList.toggle('is-active', isActive);
+      if (isActive) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
     });
   };
+  const normalizeLoop = () => {
+    const { step } = geometry();
+    const slide = Math.round(storyTrack.scrollLeft / step);
+    if (slide === 0) storyTrack.scrollTo({ left: storyCount * step, behavior: 'auto' });
+    else if (slide === storyCount + 1) storyTrack.scrollTo({ left: step, behavior: 'auto' });
+    updateCarousel();
+  };
+  const syncAutoplay = () => {
+    window.clearInterval(autoplayTimer);
+    if (userPaused || hovered || focused || interacting || !inViewport || document.hidden || storyCount < 2) return;
+    autoplayTimer = window.setInterval(() => goToStory(activeStory + 1), 6500);
+  };
+  const resetAutoplay = () => {
+    syncAutoplay();
+  };
+
   storyButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      const direction = Number(button.dataset.scroll);
-      const firstCard = storyTrack.querySelector('.story');
-      const gap = Number.parseFloat(getComputedStyle(storyTrack).columnGap) || 0;
-      const step = firstCard.getBoundingClientRect().width + gap;
-      const maxScroll = Math.max(0, storyTrack.scrollWidth - storyTrack.clientWidth);
-      const nextPosition = Math.max(0, Math.min(maxScroll, storyTrack.scrollLeft + direction * step));
-      storyTrack.scrollTo({ left: nextPosition, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      goToStory(activeStory + Number(button.dataset.scroll));
+      resetAutoplay();
     });
   });
   storyTrack.addEventListener('keydown', (event) => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
-    if (event.key === 'Home') storyTrack.scrollTo({ left: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
-    else if (event.key === 'End') storyTrack.scrollTo({ left: storyTrack.scrollWidth, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
-    else storyButtons.find((button) => Number(button.dataset.scroll) === (event.key === 'ArrowRight' ? 1 : -1))?.click();
+    if (event.key === 'Home') goToStory(0);
+    else if (event.key === 'End') goToStory(storyCount - 1);
+    else goToStory(activeStory + (event.key === 'ArrowRight' ? 1 : -1));
+    resetAutoplay();
   });
-  storyTrack.addEventListener('scroll', updateProgress, { passive: true });
-  window.addEventListener('resize', updateProgress);
-  const firstStory = storyTrack.querySelector('.story');
-  if (firstStory && storyTrack.scrollWidth > storyTrack.clientWidth) {
-    const gap = Number.parseFloat(getComputedStyle(storyTrack).columnGap) || 0;
-    storyTrack.scrollLeft = firstStory.getBoundingClientRect().width + gap;
+  storyTrack.addEventListener('scroll', () => {
+    updateCarousel();
+    window.clearTimeout(settleTimer);
+    settleTimer = window.setTimeout(normalizeLoop, 140);
+  }, { passive: true });
+  window.addEventListener('resize', () => goToStory(activeStory, 'auto'));
+  storyTrack.addEventListener('pointerdown', () => {
+    interacting = true;
+    window.clearTimeout(interactionTimer);
+    syncAutoplay();
+  }, { passive: true });
+  window.addEventListener('pointerup', () => {
+    window.clearTimeout(interactionTimer);
+    interactionTimer = window.setTimeout(() => { interacting = false; resetAutoplay(); }, 800);
+  }, { passive: true });
+  window.addEventListener('pointercancel', () => { interacting = false; resetAutoplay(); }, { passive: true });
+  const carousel = document.querySelector('.entertainment');
+  carousel.addEventListener('pointerenter', () => { hovered = true; syncAutoplay(); });
+  carousel.addEventListener('pointerleave', () => { hovered = false; syncAutoplay(); });
+  carousel.addEventListener('focusin', () => { focused = true; syncAutoplay(); });
+  carousel.addEventListener('focusout', (event) => {
+    if (!carousel.contains(event.relatedTarget)) { focused = false; syncAutoplay(); }
+  });
+  document.addEventListener('visibilitychange', syncAutoplay);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      inViewport = entry.isIntersecting;
+      syncAutoplay();
+    }, { threshold: 0.1 }).observe(carousel);
   }
-  updateProgress();
+  autoplayToggle.addEventListener('click', () => {
+    userPaused = !userPaused;
+    autoplayToggle.setAttribute('aria-pressed', String(userPaused));
+    autoplayToggle.setAttribute('aria-label', userPaused ? 'Play automatic playback' : 'Pause automatic playback');
+    autoplayToggle.querySelector('span').textContent = userPaused ? '▶' : 'Ⅱ';
+    syncAutoplay();
+  });
+  autoplayToggle.disabled = reduceMotion.matches;
+  autoplayToggle.setAttribute('aria-pressed', String(userPaused));
+  autoplayToggle.setAttribute('aria-label', reduceMotion.matches ? 'Automatic playback is disabled by reduced-motion settings' : 'Pause automatic playback');
+  autoplayToggle.querySelector('span').textContent = userPaused ? '▶' : 'Ⅱ';
+  reduceMotion.addEventListener('change', (event) => {
+    userPaused = event.matches;
+    autoplayToggle.disabled = event.matches;
+    autoplayToggle.setAttribute('aria-pressed', String(userPaused));
+    autoplayToggle.setAttribute('aria-label', event.matches ? 'Automatic playback is disabled by reduced-motion settings' : 'Pause automatic playback');
+    autoplayToggle.querySelector('span').textContent = userPaused ? '▶' : 'Ⅱ';
+    syncAutoplay();
+  });
+  if (storyCount > 1) storyTrack.scrollLeft = geometry().step;
+  updateCarousel();
+  syncAutoplay();
 
-  const revealSelector = '.hero-copy, .product-tile, .entertainment-heading, .story, .carousel-progress, .service-promo, .footer-note, .footer-breadcrumb, .footer-columns > div, .footer-bottom';
+  const revealSelector = '.hero-copy, .product-tile, .entertainment-heading, .story:not([data-carousel-clone]), .carousel-pagination, .service-promo, .footer-note, .footer-breadcrumb, .footer-columns > div, .footer-bottom';
   const revealItems = [...document.querySelectorAll(revealSelector)];
   const revealOrder = new Map();
   revealItems.forEach((item) => {
