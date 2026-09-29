@@ -22,6 +22,12 @@ python -m http.server 8000
 
 Then open <http://localhost:8000>.
 
+## Deploy to GitHub Pages
+
+The `Deploy to GitHub Pages` workflow publishes the site whenever changes are pushed to `main`. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. The deployed site will be available at <https://mhmtbsrglu.github.io/apple-homepage-clone/>.
+
+GitHub Pages can publish a private repository when the account's plan supports private-repository Pages. The published website itself is public.
+
 ## Included
 
 - Responsive global navigation with search and shopping bag panels
