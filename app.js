@@ -229,10 +229,14 @@
     activeStory = index;
     dots.forEach((dot, dotIndex) => {
       const isActive = dotIndex === index;
+      const clockwiseDistance = (dotIndex - index + storyCount) % storyCount;
+      const counterClockwiseDistance = (index - dotIndex + storyCount) % storyCount;
+      const distance = Math.min(clockwiseDistance, counterClockwiseDistance);
+      const dotSize = Math.max(4, 8 - distance);
       dot.classList.toggle('is-active', isActive);
       const shape = dot.querySelector('.carousel-dot-shape');
-      shape.style.width = isActive ? '18px' : '7px';
-      shape.style.height = '7px';
+      shape.style.width = isActive ? '18px' : `${dotSize}px`;
+      shape.style.height = isActive ? '7px' : `${dotSize}px`;
       shape.style.borderRadius = isActive ? '999px' : '50%';
       if (isActive) dot.setAttribute('aria-current', 'true');
       else dot.removeAttribute('aria-current');
